@@ -1,1055 +1,275 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>bytes</title>
-    <meta name="description" content="Council @ swat.wiki">
-    <meta property="og:title" content="bytes">
-    <meta property="og:description" content="Council @ swat.wiki">
-    <meta property="og:url" content="https://bytes.lol">
-    <meta property="og:image" content="uploads/61/6806b9f9a7cfb.jpg">
-    <meta name="twitter:title" content="bytes">
-    <meta name="twitter:description" content="Council @ swat.wiki">
-    <meta name="twitter:url" content="http://www.luabytes.lol">
-    <meta name="twitter:image" content="uploads/61/6806b9f9a7cfb.jpg">
-    <link rel="icon" type="image/x-icon" href="uploads/61/6806b9f9a7cfb.jpg">
-    <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IntelHunters</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap');
-    * {
-        margin: 0;
-        padding: 0;
-        user-select: none;
-        box-sizing: border-box;
-                font-family: 'Oswald', sans-serif;
-    }
-    .snow-container {
-        display: none;
-        position: fixed;
-        width: 100vw;
-        height: 100vh;
-        top: 0;
-        left: 0;
-        pointer-events: none;
-        z-index: 250;
-    }
-    .snow {
-        position: absolute;
-        width: 10px;
-        height: 10px;
-        background: white;
-        border-radius: 50%;
-        filter: drop-shadow(0 0 10px white);
-        animation: fall linear infinite;
-    }
-    @keyframes fall {
-        0% {
-            transform: translateY(-100vh) translateX(0);
-            opacity: 1;
+        body {
+            font-family: 'Inter', sans-serif;
         }
-        100% {
-            transform: translateY(100vh) translateX(20px);
-            opacity: 0.3;
-        }
-    }
-    .overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.8);
-        backdrop-filter: blur(10px);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 9999;
-        overflow: hidden;
-    }
-    .overlay-text {
-        color: #fff;
-        font-size: 24px;
-        letter-spacing: 2px;
-        animation: pulse 2s infinite;
-    }
-    @keyframes pulse {
-        0%   {opacity: 0.5;}
-        50%  {opacity: 1;}
-        100% {opacity: 0.5;}
-    }
-    .hidden {
-        display: none !important;
-    }
-    main {
-        opacity: 0;
-        transition: opacity 1s;
-        overflow: hidden;
-    }
-    body {
-        overflow: hidden;
-        margin: 0;
-        padding: 0;
-        height: 100vh;
-        width: 100vw;
-        background-color: #000;
-    }
-    body::before {
-        content: '';
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 500%;
-        height: 500%;
-        background: 
-            linear-gradient(
-                rgb(108, 208, 255) 50%,
-                rgb(255, 255, 255) 50%
-            ),
-            url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' seed='0' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-        background-repeat: repeat;
-        background-size: auto 2px, 200px 200px;
-        opacity: 0.25;
-        z-index: 50000;
-        display: none;
-        pointer-events: none;
-        image-rendering: pixelated;
-    }
-        body::after {
-        content: '';
-        top: 0;
-        position: fixed;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0); 
-        filter: brightness(0.8) saturate(2.5); 
-        z-index: 1000; 
-        pointer-events: none; 
-    }
-        .background-video {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        z-index: -1;
-    }
-    .background-image {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-size: cover;
-        background-position: center;
-        z-index: -1;
-    }
-    .hang {
-        position: absolute;
-        top: 0px;
-        right: 50px;
-        height: 400px;
-        animation: swing 2s infinite ease-in-out;
-        transform-origin: top center;
-        filter: grayscale(1);
-        pointer-events: none;
-        z-index: 2500;
-    }
-    @keyframes swing {
-        0%   { transform: rotate(0deg); }
-        50%  { transform: rotate(-5deg); }
-        100% { transform: rotate(0deg); }
-    }
-    .cat {
-        position: absolute;
-        top: -107.4px;
-        right: 69px;
-        height: 119.2px;
-        pointer-events: none;
-        filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.71));
-        z-index: 2500;
-    }
-    .container {
-        width: 100%;
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 30px;
-        padding: 20px;
-        opacity: 0;
-        transform: translateY(20px);
-        transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-        overflow: hidden;
-    }
-    .container.animate-in {
-        opacity: 1;
-        transform: translateY(0);
-    }
-    .profile, .discord-presence, .audio-player {
-        opacity: 0;
-        transform: translateY(30px);
-        transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .profile.animate-in, 
-    .discord-presence.animate-in, 
-    .audio-player.animate-in {
-        opacity: 1;
-        transform: translateY(0);
-    }
-    
-    /* Rainbow Border Animation */
-    @keyframes rainbow-border {
-        0% { border-color: #ff0000; }
-        14% { border-color: #ff7f00; }
-        28% { border-color: #ffff00; }
-        42% { border-color: #00ff00; }
-        57% { border-color: #0000ff; }
-        71% { border-color: #4b0082; }
-        85% { border-color: #9400d3; }
-        100% { border-color: #ff0000; }
-    }
-    
-    /* Rainbow Text Animation */
-    @keyframes rainbow-text {
-        0% { color: #ff0000; }
-        14% { color: #ff7f00; }
-        28% { color: #ffff00; }
-        42% { color: #00ff00; }
-        57% { color: #0000ff; }
-        71% { color: #4b0082; }
-        85% { color: #9400d3; }
-        100% { color: #ff0000; }
-    }
-    
-    .profile {
-        display: flex;
-        flex-direction: row; 
-        align-items: center;
-        justify-content: flex-start;
-        gap: 2rem;
-        padding: 30px;
-        width: 80%;
-        max-width: 800px;
-        min-height: 250px;
-        background-color: rgba(25, 25, 25, 0.25);
-        color: #ffffff;
-        backdrop-filter: blur(15px);
-        border-radius: 25px;
-        border: 1px solid #ffffff;
-        position: relative;
-        z-index: 2;
-        overflow: hidden;
-        animation: rainbow-border 10s linear infinite;
-    }
-    
-    .username {
-        animation: rainbow-text 10s linear infinite;
-    }
-    
-    .left-panel {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-    }
-    .pfp-container {
-        position: relative;
-        z-index: 1;
-        top: 15px;
-        width: 150px;
-        height: 150px;
-    }
-    .avatar {
-        position: relative;
-        z-index: 2;
-        width: 130px;   
-        height: 130px;
-        border-radius: 50%;
-        object-fit: cover;
-        transition: transform 0.3s ease;
-    }
-    .avatar:hover {
-        transform: scale(1.05);
-    }
-    .pfp-decoration {
-        position: absolute;
-        top: -55.9%;
-        left: -9.5%;
-        width: 105.4%;
-        height: 200%;
-        pointer-events: none;
-        z-index: 2;
-        border-radius: 0;
-    }
-    .pfp-decoration img {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-        margin: 0;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        pointer-events: none;
-    }
-    .right-panel {
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        gap: 1rem;
-        flex: 1;
-    }
-    .username-badges {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 0.6rem;
-    }
-    .username-container {
-        position: relative;
-        display: inline-block;
-    }
-    .username-container h3 {
-        margin: 0;
-        font-size: 1.8rem;
-        font-weight: bold;
-    }
-    .tooltip {
-        position: absolute;
-        background: rgba(255, 255, 255, 0.15);
-        color: white;
-        padding: 6px 12px;
-        border-radius: 20px;
-        font-size: 14px;
-        bottom: 130%;
-        left: 50%;
-        transform: translateX(-50%) translateY(10px);
-        opacity: 0;
-        visibility: hidden;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        white-space: nowrap;
-        z-index: 1000;
-        backdrop-filter: blur(2px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    .username-container:hover .tooltip {
-        opacity: 1;
-        visibility: visible;
-        transform: translateX(-50%) translateY(0);
-    }
-    .separator-pipe {
-        font-size: 1.2rem;
-        color: #FFFFFF;
-        opacity: 0.8;
-    }
-    .badges-container {
-        display: flex;
-        flex-direction: row;
-        gap: 8px;
-        align-items: center;
-    }
-    .badge {
-        position: relative;
-        width: 40px;
-        height: 40px;
-        display: flex;
-        filter: drop-shadow(0px 0px 5px white);
-        align-items: center;
-        justify-content: center;
-        transition: transform 0.3s ease;
-    }
-    .badge img {
-        width: 30px;
-        height: 30px;
-        object-fit: contain;
-        filter: brightness(0) invert(1);
-    }
-    .badge-tooltip {
-        position: absolute;
-        background: rgba(255, 255, 255, 0.15);
-        color: white;
-        padding: 6px 12px;
-        border-radius: 20px;
-        font-size: 12px;
-        bottom: 80%;
-        left: 50%;
-        transform: translateX(-50%) translateY(10px);
-        opacity: 0;
-        visibility: hidden;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        white-space: nowrap;
-        z-index: 1000;
-        filter: none!important;
-        backdrop-filter: blur(2px);
-        text-shadow: none!important;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    .badge:hover .badge-tooltip {
-        opacity: 1;
-        visibility: visible;
-        transform: translateX(-50%) translateY(0);
-    }
-    .bio {
-        font-size: 1rem;
-        opacity: 0.85;
-        line-height: 1.5;
-        max-width: 500px;
-        animation: slideUp 0.5s ease;
-    }
-    .social-links {
-        display: flex;
-        gap: 15px;
-        animation: slideUp 0.7s ease;
-        flex-wrap: wrap;
-    }
-    .social-link {
-        font-size: 50px;
-        color: #FFFFFF;
-        filter: drop-shadow(0 0 5px #FFFFFF);
-        transition: all 0.3s ease;
-    }
-    .social-link:hover {
-        transform: translateY(-3px);
-    }
-    .stats-container {
-        position: absolute;
-        right: 20px;
-        bottom: 20px;
-        display: flex;
-        align-items: center;
-        gap: 15px;
-        font-size: 1rem;
-        color: #FFFFFF;
-    }
-    .stats-item {
-        display: flex;
-        align-items: center;
-        gap: 5px;
-    }
-    .stats-container .iconify {
-        font-size: 1.2rem;
-        margin-top: -1px;
-    }
-    .stats-separator {
-        color: #FFFFFF;
-        opacity: 0.5;
-    }
-    @keyframes fadeIn {
-      from {opacity: 0;}
-      to   {opacity: 1;}
-    }
-    @keyframes slideUp {
-      from {
-          opacity: 0;
-          transform: translateY(20px);
-      }
-      to   {
-          opacity: 1;
-          transform: translateY(0);
-      }
-    }
-    .audio-player {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        gap: 1rem;
-        width: 80%;
-        max-width: 800px;
-        padding: 30px;
-        background-color: rgba(25, 25, 25, 0.25);
-        color: #FFFFFF;
-        backdrop-filter: blur(15px);
-        border-radius: 25px;
-        border: 1px solid #191919;
-        position: relative;
-        z-index: 2;
-        overflow: hidden;
-    }
-    .song-cover {
-        width: 60px;
-        height: 60px;
-        object-fit: cover;
-        border-radius: 5px;
-    }
-    .discord-presence {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 1rem;
-    width: 80%;
-    max-width: 800px;
-    padding: 30px;
-    background-color: rgba(25, 25, 25, 0.25);
-    color: #FFFFFF;
-    backdrop-filter: blur(15px);
-    border-radius: 25px;
-    border: 1px solid #191919;
-    position: relative;
-    z-index: 2;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.5s ease, transform 0.5s ease;
-    animation: slideUp 0.5s ease forwards;
-    animation-delay: 0.6s;
-}
-
-.discord-presence.animate-in {
-    opacity: 1;
-    transform: translateY(0);
-    transition-delay: 0.6s;
-}
-
-.presence-content {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    width: 100%;
-}
-
-.presence-avatar-container {
-    position: relative;
-    width: 48px;
-    height: 48px;
-}
-
-.presence-avatar {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    object-fit: cover;
-}
-
-.presence-status {
-    position: absolute;
-    bottom: -2px;
-    right: -2px;
-    width: 16px;
-    height: 16px;
-    z-index: 3;
-}
-
-.presence-info {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-.presence-username {
-    font-weight: bold;
-    font-size: 1rem;
-}
-
-.presence-activity {
-    font-size: 0.9rem;
-    opacity: 0.8;
-}
-
-.presence-large-image {
-    width: 48px;
-    height: 48px;
-    border-radius: 8px;
-    object-fit: cover;
-}
-    .song-info {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-    }
-    .song-title {
-        font-size: 1rem;
-        font-weight: bold;
-    }
-    .progress-container {
-        width: 100%;
-        height: 5px;
-        background: rgba(255,255,255,0.3);
-        border-radius: 5px;
-        overflow: hidden;
-    }
-    .progress-bar {
-        width: 0%;
-        height: 100%;
-        background: #fff;
-    }
-    .play-pause {
-        background: none;
-        border: none;
-        cursor: pointer;
-        outline: none;
-        font-size: 1.5rem;
-        color: #FFFFFF;
-    }
-    .badges-wrapper {
-    display: inline-flex;
-    align-items: center;
-    margin-left: 1px;
-    gap: 4px;
-    position: relative;
-    top: -1px;
-}
-
-.badge-icon {
-    width: 20px;
-    height: 20px;
-    object-fit: contain;
-    display: inline-flex;
-    vertical-align: middle;
-    transform: translateY(1px);
-}
-
-.avatar-decoration {
-	position: absolute;
-	top: -5px;
-	left: -5px;
-	width: calc(100% + 10px);
-	height: calc(100% + 10px);
-	pointer-events: none;
-}
-
-.status-emoji {
-    width: 20px;
-    height: 20px;
-    vertical-align: middle;
-    margin-right: 5px;
-}
-
-.presence-username {
-    display: inline-flex;
-    align-items: center; 
-    gap: 8px;
-}
-
-body.entered {
-    overflow: auto;
-}
     </style>
 </head>
-<body>
-<div class="snow-container"></div>
-    <img src="https://files.catbox.moe/zf9lch.gif" class="cat">
-    <div class="background-image" style="background: url('assets/images/default-background.jpg') no-repeat center center/cover;"></div>
-<div class="overlay" id="enterOverlay">
-    <div class="overlay-text">Welcome, Traveler.</div>
-</div>
-<div class="container">
-    <main class="profile" id="profileCard">
-        <div class="left-panel">
-            <div class="pfp-container">
-                <img src="https://www.pfpgeeks.com/static/images/black-pfp/webp/black-pfp-1.webp" alt="pfp" class="avatar">
-                                <div class="pfp-decoration">
-                    <img src="assets/decor/angry.gif" alt="Angry decoration">
-                </div>
-                            </div>
-        </div>
-        <div class="right-panel">
-            <div class="username-badges">
-                <div class="username-container">
-                    <h3 class="username">luabytes</h3>
-                    <span class="tooltip">Hi!</span>
-                </div>
-                <div class="separator-pipe">|</div>
-                <div class="badges-container">
-                    <div class="badge">
-                        <img src="https://restrain.cc/assets/badge/staff.svg" alt="Staff">
-                        <div class="badge-tooltip">Staff @ nosint.org</div>
-                    </div>
-                    <div class="badge">
-                        <img src="https://restrain.cc/assets/badge/premium.svg" alt="Premium">
-                        <div class="badge-tooltip">OSINT Supporter</div>
-                    </div>
-                    <div class="badge">
-                        <img src="https://restrain.cc/assets/badge/bleed.svg" alt="Founder">
-                        <div class="badge-tooltip">Founder @ IntelHunters</div>
-                    </div>
-                    <div class="badge">
-                        <img src="https://restrain.cc/assets/badge/respected.png" alt="Premium">
-                        <div class="badge-tooltip">Council @ swat.wiki</div>
-                    </div>
-                    <div class="badge">
-                        <img src="https://restrain.cc/assets/badge/verified.svg" alt="Premium">
-                        <div class="badge-tooltip">Verified Developer</div>
-                    </div>
+<body class="bg-gradient-to-r from-black to-purple-900 text-white">
+    <header class="bg-transparent absolute top-0 left-0 w-full py-6">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-purple-400">IntelHunters</a>
+            <nav class="hidden md:block">
+                <ul class="flex space-x-8">
+                    <li><a href="#home" class="hover:text-purple-300 transition duration-300 text-lg">Home</a></li>
+                    <li><a href="#about" class="hover:text-purple-300 transition duration-300 text-lg">About</a></li>
+                    <li><a href="#team" class="hover:text-purple-300 transition duration-300 text-lg">Team</a></li>
+                    <li><a href="#contact" class="hover:text-purple-300 transition duration-300 text-lg">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="text-gray-300 hover:text-purple-300 focus:outline-none focus:shadow-outline">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                    </svg>
+                </button>
+                <div id="mobile-menu" class="hidden absolute top-20 right-0 bg-gray-800 shadow-lg rounded-md py-4 px-6 space-y-3">
+                    <a href="#home" class="block hover:text-purple-300 transition duration-300 text-lg">Home</a>
+                    <a href="#about" class="block hover:text-purple-300 transition duration-300 text-lg">About</a>
+                    <a href="#team" class="block hover:text-purple-300 transition duration-300 text-lg">Team</a>
+                    <a href="#contact" class="block hover:text-purple-300 transition duration-300 text-lg">Contact</a>
                 </div>
             </div>
-            <p class="bio">17 year old OSINT Enthusiast.</p>            <div class="social-links">
-                <a href='https://doxbin.com/user/luabytes' class='social-link' target='_blank'>
-                                <span class='iconify' data-icon='fluent:globe-16-filled'></span>
-                            </a><a href='https://t.me/bo_sint' class='social-link' target='_blank'>
-                                <span class='iconify' data-icon='mdi:telegram'></span>
-                              </a><a href='https://swatwiki.org/u/luabytes' class='social-link' target='_blank'>
-                                <span class='iconify' data-icon='fluent:globe-16-filled'></span>
-                              </a><a href='https://t.me/intelhunters' class='social-link' target='_blank'>
-                                <span class='iconify' data-icon='mdi:telegram'></span>
-                              </a>            </div>
         </div>
-<div class="stats-container">
-            <div class="stats-item">
-            <span class="iconify" data-icon="mdi:map-marker"></span>
-            <p>Contact for Inquiries</p>
+    </header>
+
+    <main class="container mx-auto px-6 py-24 flex flex-col items-center justify-center">
+        <div id="home" class="text-center space-y-8 mb-16">
+            <h1 class="text-5xl font-bold text-purple-300 tracking-wide">IntelHunters.</h1>
+            <p class="text-gray-300 text-xl">Founded by luabytes</p>
+            <p class="text-lg text-gray-400 max-w-2xl">We are a non-profit group dedicated to exposing pedophiles. We work with Law Enforcement to get pedophiles off the streets, convicted, and behind bars. We want to create a safer community for all ages online.</p>
         </div>
-        <div class="stats-separator">|</div>
+
+        <div id="about" class="flex justify-center w-full mb-12">
+            <div class="bg-black/50 backdrop-blur-lg rounded-3xl p-12 shadow-2xl border border-purple-500/20 w-full md:w-3/4 lg:w-1/2 transform hover:scale-105 transition-all duration-300 relative">
+                <div class="absolute inset-0 bg-gradient-to-br from-purple-900/50 to-black/50 rounded-3xl opacity-80"></div>
+                <h2 class="text-3xl font-semibold text-white mb-8 text-center relative z-10 flex items-center justify-center gap-3">
+                    
+                    Join our Telegram Chat
+                </h2>
+                <p class="text-gray-300 mb-8 text-center text-lg relative z-10">Connect with us on Telegram to stay updated and support our mission.</p>
+                <div class="text-center relative z-10">
+                    <a
+                        href="https://t.me/intelhunters"
+                        class="relative h-12 px-8 rounded-lg overflow-hidden transition-all duration-500 group inline-block"
+                    >
+                        <div
+                            class="absolute inset-0 rounded-lg p-[2px] bg-gradient-to-b from-[#654358] via-[#17092A] to-[#2F0D64]"
+                        >
+                            <div class="absolute inset-0 bg-[#170928] rounded-lg opacity-90"></div>
+                        </div>
+                        <div class="absolute inset-[2px] bg-[#170928] rounded-lg opacity-95"></div>
+                        <div
+                            class="absolute inset-[2px] bg-gradient-to-r from-[#170928] via-[#1d0d33] to-[#170928] rounded-lg opacity-90"
+                        ></div>
+                        <div
+                            class="absolute inset-[2px] bg-gradient-to-b from-[#654358]/40 via-[#1d0d33] to-[#2F0D64]/30 rounded-lg opacity-80"
+                        ></div>
+                        <div
+                            class="absolute inset-[2px] bg-gradient-to-br from-[#C787F6]/10 via-[#1d0d33] to-[#2A1736]/50 rounded-lg"
+                        ></div>
+                        <div
+                            class="absolute inset-[2px] shadow-[inset_0_0_15px_rgba(199,135,246,0.15)] rounded-lg"
+                        ></div>
+                        <div class="relative flex items-center justify-center">
+                            <span
+                                class="text-lg font-normal bg-gradient-to-b from-[#D69DDE] to-[#B873F8] bg-clip-text text-transparent drop-shadow-[0_0_12px_rgba(199,135,246,0.4)] tracking-tighter join-now-text"
+                            >
+                            Join Now
+                            </span>
+                        </div>
+                        <div
+                            class="absolute inset-[2px] opacity-0 transition-opacity duration-300 bg-gradient-to-r from-[#2A1736]/20 via-[#C787F6]/10 to-[#2A1736]/20 group-hover:opacity-100 rounded-lg"
+                        ></div>
+                    </a>
+                </div>
+            </div>
         </div>
+        <div class="w-full flex justify-center mb-12">
+            <div class="w-full md:w-3/4 lg:w-1/2">
+                <div class="h-px bg-gradient-to-r from-purple-800/50 via-purple-500/80 to-purple-800/50 rounded-full"></div>
+            </div>
+        </div>
+
+        <div id="team" class="w-full text-center">
+            <h2 class="text-4xl font-bold text-purple-300 mb-8">Our Team</h2>
+            <div id="team-cards" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            </div>
+        </div>
+
+        <div id="contact" class="w-full text-center mt-16">
+                <h2 class="text-4xl font-bold text-purple-300 mb-8">Contact Us</h2>
+            <p class="text-lg text-gray-400 max-w-2xl mx-auto">
+                If you have any information or tips, please reach out to us. 	Your contribution can help make a difference.
+            </p>
+            <div class="mt-8">
+                <a
+                    href="mailto:blake@luabytes.lol"
+                    class="text-white bg-purple-500 hover:bg-purple-600 px-6 py-3 rounded-full text-lg transition duration-300 contact-button"
+                >
+                    Email Us: blake@luabytes.lol
+                </a>
+            </div>
+        </div>
+
     </main>
-        <div class="discord-presence" id="discordPresence">
-        <div class="presence-content">
-            <div class="presence-avatar-container">
-                <img src="" alt="Profile Picture" class="presence-avatar">
-                <img src="https://assets.guns.lol/offline.png" alt="Status" class="presence-status">
-            </div>
-            <div class="presence-info">
-                <span class="presence-username"></span>
-                <span class="presence-activity"></span>
-            </div>
-            <img src="" alt="Activity Image" class="presence-large-image">
-        </div>
-    </div>
-    
-    
-    </div>
-</div>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const overlay = document.getElementById('enterOverlay');
-    const bgMusic = document.getElementById('backgroundMusic');
-    const container = document.querySelector('.container');
-    const profile = document.querySelector('.profile');
-    const audioPlayer = document.getElementById('audioPlayer');
-    const discordPresence = document.getElementById('discordPresence');
-    const playPauseBtn = document.getElementById('playPauseBtn');
-    const progressBar = document.getElementById('progressBar');
 
-    if (playPauseBtn && bgMusic) {
-        playPauseBtn.addEventListener('click', () => {
-            if (bgMusic.paused) {
-                bgMusic.play();
-                playPauseBtn.innerHTML = '<span class="iconify" data-icon="mdi:pause"></span>';
-            } else {
-                bgMusic.pause();
-                playPauseBtn.innerHTML = '<span class="iconify" data-icon="mdi:play"></span>';
-            }
-        });
+    <script>
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
 
-        bgMusic.addEventListener('timeupdate', () => {
-            const progress = (bgMusic.currentTime / bgMusic.duration) * 100;
-            if (progressBar) {
-                progressBar.style.width = `${progress}%`;
-            }
-        });
-
-        if (progressBar && progressBar.parentElement) {
-            progressBar.parentElement.addEventListener('click', (e) => {
-                const rect = progressBar.parentElement.getBoundingClientRect();
-                const pos = (e.clientX - rect.left) / rect.width;
-                bgMusic.currentTime = pos * bgMusic.duration;
+        if (mobileMenuButton && mobileMenu) {
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
             });
         }
-    }
 
-    if (overlay) {
-        overlay.addEventListener('click', async function() {
-            overlay.style.transition = 'opacity 0.6s';
-            overlay.style.opacity = '0';
-            
-            try {
-                if (bgMusic) {
-                    await bgMusic.play();
-                    bgMusic.volume = 0.3;
-                    if (playPauseBtn) {
-                        playPauseBtn.innerHTML = '<span class="iconify" data-icon="mdi:pause"></span>';
-                    }
-                }
-            } catch (err) {
-                console.error("Audio playback failed:", err);
-            }
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
 
-            container.classList.add('animate-in');
-            const components = [profile, audioPlayer, discordPresence];
-            components.forEach(component => {
-                if (component) {
-                    setTimeout(() => {
-                        component.classList.add('animate-in');
-                    }, 100);
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+
+                // Close mobile menu after clicking on a link
+                if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
                 }
             });
-
-            setTimeout(() => {
-                overlay.classList.add('hidden');
-            }, 600);
         });
-    }
-});
-</script>
-<script>
-function createSnow() {
-    const snowContainer = document.querySelector('.snow-container');
-    const snowflakesCount = 75;
-    for (let i = 0; i < snowflakesCount; i++) {
-        const snowflake = document.createElement('div');
-        snowflake.classList.add('snow');
-        snowflake.style.left = `${Math.random() * 100}vw`;
-        snowflake.style.animationDuration = `${Math.random() * 3 + 2}s`;
-        snowflake.style.opacity = Math.random();
-        snowflake.style.width = snowflake.style.height = `${Math.random() * 5 + 5}px`;
-        snowContainer.appendChild(snowflake);
-        snowflake.addEventListener('animationend', () => {
-            snowflake.remove();
-            createSnowflake();
-        });
-    }
-}
-function createSnowflake() {
-    const snowContainer = document.querySelector('.snow-container');
-    const snowflake = document.createElement('div');
-    snowflake.classList.add('snow');
-    snowflake.style.left = `${Math.random() * 100}vw`;
-    snowflake.style.animationDuration = `${Math.random() * 3 + 2}s`;
-    snowflake.style.opacity = Math.random();
-    snowflake.style.width = snowflake.style.height = `${Math.random() * 5 + 5}px`;
-    snowContainer.appendChild(snowflake);
-    snowflake.addEventListener('animationend', () => {
-        snowflake.remove();
-        createSnowflake();
-    });
-}
-document.addEventListener('DOMContentLoaded', function() {
-    if(document.querySelector('.snow-container')) {
-        createSnow();
-    }
-});
-const scrambleChars = '_×+@#$%&*!?/\\|=~^';
-function scrambleText(element) {
-    const originalText = element.getAttribute('data-text');
-    let iteration = 0;
-    const maxIterations = 3;
-    const interval = setInterval(() => {
-        element.innerText = originalText
-            .split('')
-            .map((letter, index) => {
-                if (index < iteration) {
-                    return originalText[index];
-                }
-                return scrambleChars[Math.floor(Math.random() * scrambleChars.length)];
-            })
-            .join('');
-        if (iteration >= originalText.length) {
-            clearInterval(interval);
-            element.innerText = originalText;
-        }
-        iteration += 1 / maxIterations;
-    }, 30);
-}
-function startAutoScramble() {
-    const scrambledElements = document.querySelectorAll('.scrambled');
-    scrambledElements.forEach(element => {
-        element.innerText = element.getAttribute('data-text');
-        setInterval(() => {
-            scrambleText(element);
-        }, 5000);
-        scrambleText(element);
-    });
-}
-document.addEventListener('DOMContentLoaded', () => {
-    startAutoScramble();
-});
-</script>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const overlay = document.getElementById('enterOverlay');
-    const bgMusic = document.getElementById('backgroundMusic');
-    const discordPresence = document.getElementById('discordPresence');
 
-    if (bgMusic) {
-        overlay.addEventListener('click', async function() {
-            overlay.style.transition = 'opacity 0.6s';
-            overlay.style.opacity = '0';
-            
-            try {
-                await bgMusic.play();
-                bgMusic.volume = 0.3;
-            } catch (err) {
-                console.error("Audio playback failed:", err);
-            }
+        const teamData = [
+            {
+                name: 'Luabytes',
+                rank: 'Founder',
+                description: '"When you are apart of a global movement, you will have global problems." - luabytes',
+                contact: 'https://t.me/bo_sint'
+            },
+            {
+                name: 'Hate',
+                rank: 'Jack of All Trades',
+                description: 'sexy beast who be esexin hella',
+                contact: 'https://t.me/SheHarmOnMyNationTillI764'
+            },
+            {
+                name: 'Torch',
+                rank: 'OSINT Specialist',
+                description: 'king vons worst enemy',
+                contact: 'https://t.me/torchism'
+            },
+            {
+                name: 'Reb',
+                rank: 'OSINT Specialist',
+                description: 'The smelliest dirtiest nigger coon of all time',
+                contact: 'https://t.me/comreppin'
+            },
+            {
+                name: 'Ameli',
+                rank: 'French Specialist',
+                description: 'Pipo Pipo kitty cat',
+                contact: 'https://t.me/iliadgroup'
+            },
+             {
+                name: 'Raq',
+                rank: 'OSINT Specialist',
+                description: '"please tool, i poor 🥺" - raq',
+                contact: 'https://t.me/ebonybackshots'
+            },
+            {
+                name: 'Tooko',
+                rank: 'CSINT Specialist',
+                description: 'The lil femboy',
+                contact: 'https://t.me/felonyshooting'
+            },
+            {
+                name: 'Akane',
+                rank: 'Target Finder',
+                description: '"Yes King" - Akane',
+                contact: 'https://t.me/voiceleak'
+            },
+            {
+                name: 'SC',
+                rank: 'SE Specialist',
+                description: 'Expert in Social Engineering.',
+                contact: 'https://t.me/judging_you'
+            },
+        ];
 
-            setTimeout(() => {
-                discordPresence.classList.add('animate-in');
-            }, 200);
+        const teamCardsContainer = document.getElementById('team-cards');
 
-            setTimeout(() => {
-                overlay.classList.add('hidden');
-            }, 1000);
-        });
-    }
-});
-
-const statusUrls = {
-    'dnd': 'https://assets.guns.lol/dnd.png',
-    'idle': 'https://assets.guns.lol/idle.png',
-    'offline': 'https://assets.guns.lol/offline.png',
-    'online': 'https://assets.guns.lol/online.png'
-};
-
-async function updateDiscordPresence() {
-    try {
-        const presenceContainer = document.getElementById('discordPresence');
-        const discordId = '978033480191598702'; 
-        
-        const [userResponse, statusResponse] = await Promise.all([
-            fetch(`/includes/user.php?discord_id=${discordId}`),
-            fetch(`/includes/presence.php?discord_id=${discordId}`)
-        ]);
-        
-        if (!userResponse.ok || !statusResponse.ok) {
-            throw new Error('Network response was not ok');
-        }
-
-        const userData = await userResponse.json();
-        const statusData = await statusResponse.json();
-
-        if (!userData || !statusData) {
-            throw new Error('Invalid data received');
-        }
-
-        presenceContainer.style.display = 'block';
-        
-        const avatar = presenceContainer.querySelector('.presence-avatar');
-        const username = presenceContainer.querySelector('.presence-username');
-        const activity = presenceContainer.querySelector('.presence-activity');
-        const largeImage = presenceContainer.querySelector('.presence-large-image');
-        const statusImage = presenceContainer.querySelector('.presence-status');
-
-        avatar.src = userData.avatar_url;
-        if (userData.decoration && userData.decoration.name) {
-            const decoration = document.createElement('img');
-            decoration.src = userData.decoration.name;
-            decoration.className = 'avatar-decoration';
-            avatar.parentElement.appendChild(decoration);
-        }
-
-        username.textContent = userData.name || userData.username;
-        
-        if (userData.badges && userData.badges.length > 0) {
-            const badgesContainer = document.createElement('span');
-            badgesContainer.className = 'badges-wrapper';
-            
-            userData.badges.forEach(badge => {
-                const badgeImg = document.createElement('img');
-                badgeImg.src = badge.url;
-                badgeImg.className = 'badge-icon';
-                badgeImg.title = badge.description;
-                badgeImg.alt = badge.name;
-                badgesContainer.appendChild(badgeImg);
+        if (teamCardsContainer) {
+            teamData.forEach(member => {
+                const cardHTML = `
+                    <div
+                        class="relative h-[18em] w-[20em] border-2 border-[rgba(75,30,133,0.5)] rounded-[1.5em] bg-gradient-to-br from-[rgba(75,30,133,1)] via-purple-700/80 to-[rgba(75,30,133,0.2)] text-white font-nunito p-[1.5em] flex justify-center items-left flex-col gap-[1em] backdrop-blur-[12px] hover:shadow-2xl hover:shadow-purple-500/30 transition-all duration-500 group/card hover:-translate-y-1"
+                    >
+                        <div
+                            class="absolute inset-0 bg-gradient-to-br from-purple-600/30 via-fuchsia-500/20 to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity duration-500 rounded-[1.5em]"
+                        ></div>
+                        <div
+                            class="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(120,50,190,0.1),transparent_60%)] group-hover/card:animate-pulse"
+                        ></div>
+                        <div class="absolute top-4 right-4 flex gap-2">
+                            <div class="w-2 h-2 rounded-full bg-purple-300/50"></div>
+                            <div class="w-2 h-2 rounded-full bg-purple-300/30"></div>
+                            <div class="w-2 h-2 rounded-full bg-purple-300/10"></div>
+                        </div>
+                        <div
+                            class="relative z-10 transition-transform duration-300 group-hover/card:translate-y-[-2px] space-y-3"
+                        >
+                            <h1
+                                class="text-[2.2em] font-bold bg-gradient-to-r from-white via-purple-100 to-purple-200 bg-clip-text text-transparent"
+                            >
+                                ${member.name}
+                            </h1>
+                            <div class="mt-[-0.5em] mb-[0.5em]">
+                                <span class="inline-block bg-purple-500/20 text-purple-300 text-xs font-medium px-2 py-1 rounded-full border border-purple-500/30">
+                                    Rank: ${member.rank}
+                                </span>
+                            </div>
+                            <p class="text-[0.9em] text-purple-100/90 leading-relaxed font-light">
+                                ${member.description}
+                            </p>
+                        </div>
+                        <a
+                            href="${member.contact}"
+                            class="relative h-fit w-fit px-[1.4em] py-[0.7em] mt-2 border-[1px] border-purple-300/30 rounded-full flex justify-center items-center gap-[0.7em] overflow-hidden group/btn hover:border-purple-300/50 hover:shadow-lg hover:shadow-purple-500/20 active:scale-95 transition-all duration-300 backdrop-blur-[12px] bg-purple-500/10"
+                        >
+                            <div
+                                class="absolute inset-0 bg-gradient-to-r from-purple-600/40 via-fuchsia-500/40 to-purple-600/40 translate-x-[-100%] group-hover/btn:translate-x-[100%] transition-transform duration-700"
+                            ></div>
+                            <p class="relative z-10 font-medium tracking-wide contact-me-text">Contact Me</p>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke-width="2"
+                                stroke="currentColor"
+                                class="relative z-10 w-5 h-5 group-hover/btn:translate-x-[10%] transition-transform duration-300"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
+                                ></path>
+                            </svg>
+                        </a>
+                        <div
+                            class="absolute bottom-4 left-4 w-8 h-8 rounded-full bg-gradient-to-br from-purple-400/20 to-transparent blur-sm group-hover/card:animate-pulse"
+                        ></div>
+                    </div>
+                `;
+                teamCardsContainer.innerHTML += cardHTML;
             });
-            
-            username.appendChild(badgesContainer);
         }
-        
-        let currentStatus = 'offline';
-        for (const status of ['online', 'idle', 'dnd']) {
-            if (statusData[status] && statusData[status].length > 0) {
-                currentStatus = status;
-                break;
-            }
-        }
-        
-        statusImage.src = statusUrls[currentStatus];
-
-        if (statusData.activities && statusData.activities.length > 0) {
-            let displayActivity = null;
-            
-            const spotifyActivity = statusData.activities.find(act => act.name === 'Spotify');
-            const customStatus = statusData.activities.find(act => act.type === 4);
-            
-            if (spotifyActivity) {
-                activity.textContent = `Listening to ${spotifyActivity.details} by ${spotifyActivity.state}`;
-                if (spotifyActivity.assets && spotifyActivity.assets.large_image) {
-                    const spotifyImageId = spotifyActivity.assets.large_image.split(':')[1];
-                    const spotifyLink = document.createElement('a');
-                    spotifyLink.href = `https://open.spotify.com/track/${spotifyActivity.sync_id}`;
-                    spotifyLink.target = '_blank';
-                    spotifyLink.style.display = 'block';
-                    
-                    largeImage.src = `https://i.scdn.co/image/${spotifyImageId}`;
-                    largeImage.style.display = 'block';
-                    
-                    largeImage.parentNode.replaceChild(spotifyLink, largeImage);
-                    spotifyLink.appendChild(largeImage);
-                }
-            } else if (customStatus) {
-                let statusText = customStatus.state || '';
-                if (customStatus.emoji) {
-                    const emojiElement = document.createElement('img');
-                    const emojiId = customStatus.emoji.id + ''; 
-                    emojiElement.src = `https://cdn.discordapp.com/emojis/${emojiId}.${customStatus.emoji.animated ? 'gif' : 'png'}`;
-                    emojiElement.className = 'status-emoji';
-                    activity.textContent = '';
-                    activity.appendChild(emojiElement);
-                    activity.appendChild(document.createTextNode(statusText));
-                } else {
-                    activity.textContent = statusText;
-                }
-                largeImage.style.display = 'none';
-            } else {
-                displayActivity = statusData.activities[0];
-                activity.textContent = displayActivity.name;
-                if (displayActivity.details) {
-                    activity.textContent += ` - ${displayActivity.details}`;
-                }
-                if (displayActivity.assets && displayActivity.assets.large_image) {
-                    const imageKey = displayActivity.assets.large_image;
-                    if (imageKey.startsWith('spotify:')) {
-                        largeImage.src = `https://i.scdn.co/image/${imageKey.split(':')[1]}`;
-                    } else if (imageKey.startsWith('mp:external/')) {
-                        largeImage.src = `https://media.discordapp.net/${imageKey.replace('mp:', '')}`;
-                    } else {
-                        largeImage.src = `https://cdn.discordapp.com/app-assets/${displayActivity.application_id}/${imageKey}.png`;
-                    }
-                    largeImage.style.display = 'block';
-                } else {
-                    largeImage.style.display = 'none';
-                }
-            }
-        } else {
-            if (currentStatus === 'offline' && statusData.last_online) {
-                const lastOnlineTimestamp = statusData.last_online.timestamp * 1000;
-                const now = Date.now();
-                const diffSeconds = Math.floor((now - lastOnlineTimestamp) / 1000);
-                
-                let timeAgo;
-                if (diffSeconds < 60) {
-                    timeAgo = `${diffSeconds} seconds ago`;
-                } else if (diffSeconds < 3600) {
-                    const minutes = Math.floor(diffSeconds / 60);
-                    timeAgo = `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
-                } else if (diffSeconds < 86400) {
-                    const hours = Math.floor(diffSeconds / 3600);
-                    timeAgo = `${hours} hour${hours > 1 ? 's' : ''} ago`;
-                } else {
-                    const days = Math.floor(diffSeconds / 86400);
-                    timeAgo = `${days} day${days > 1 ? 's' : ''} ago`;
-                }
-                
-                activity.textContent = `Last seen ${timeAgo}`;
-            } else if (userData.clan && userData.clan.tag) {
-                activity.textContent = `[${userData.clan.tag}] ${currentStatus.charAt(0).toUpperCase() + currentStatus.slice(1)}`;
-            } else {
-                activity.textContent = currentStatus.charAt(0).toUpperCase() + currentStatus.slice(1);
-            }
-            largeImage.style.display = 'none';
-        }
-    } catch (error) {
-        console.error('Error fetching Discord presence:', error);
-        const presenceContainer = document.getElementById('discordPresence');
-        presenceContainer.style.display = 'none';
-    }
-}
-
-updateDiscordPresence();
-setInterval(updateDiscordPresence, 15000);
-</script>
+    </script>
 </body>
 </html>
